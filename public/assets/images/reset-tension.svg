@@ -1,0 +1,15 @@
+<svg width="221" height="197" viewBox="0 0 221 197" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="flowerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#CB5A9F"/>
+      <stop offset="100%" stop-color="#7A5495"/>
+    </linearGradient>
+  </defs>
+  <rect width="221" height="197" rx="10" fill="url(#flowerGrad)"/>
+  <circle cx="110.5" cy="98.5" r="35" fill="#ED9ECE" opacity="0.8"/>
+  <circle cx="110.5" cy="75" r="20" fill="#FFDE9B" opacity="0.9"/>
+  <circle cx="110.5" cy="122" r="20" fill="#FFDE9B" opacity="0.9"/>
+  <circle cx="87" cy="98.5" r="20" fill="#FFDE9B" opacity="0.9"/>
+  <circle cx="134" cy="98.5" r="20" fill="#FFDE9B" opacity="0.9"/>
+  <circle cx="110.5" cy="98.5" r="16" fill="#FE7209"/>
+</svg>

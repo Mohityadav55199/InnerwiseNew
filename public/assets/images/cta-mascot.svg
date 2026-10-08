@@ -1,0 +1,18 @@
+<svg width="376" height="401" viewBox="0 0 376 401" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Mascot Head -->
+  <circle cx="188" cy="110" r="55" fill="#FE7209"/>
+  <rect x="148" y="92" width="80" height="26" rx="13" fill="#FAF5F2"/>
+  <circle cx="170" cy="105" r="7" fill="#2E2E2E"/>
+  <circle cx="206" cy="105" r="7" fill="#2E2E2E"/>
+  
+  <!-- Open Arms -->
+  <path d="M120 180C70 170 30 190 15 220C5 240 20 260 40 250C70 235 110 210 130 200" fill="#FAF5F2" stroke="#FE7209" stroke-width="4"/>
+  <path d="M256 180C306 170 346 190 361 220C371 240 356 260 336 250C306 235 266 210 246 200" fill="#FAF5F2" stroke="#FE7209" stroke-width="4"/>
+  
+  <!-- Body -->
+  <path d="M120 180C120 150 150 140 188 140C226 140 256 150 256 180V280C256 310 220 330 188 330C156 330 120 310 120 280V180Z" fill="#FAF5F2" stroke="#FE7209" stroke-width="4"/>
+  
+  <!-- Legs / Base -->
+  <rect x="140" y="320" width="36" height="50" rx="18" fill="#7A5495"/>
+  <rect x="200" y="320" width="36" height="50" rx="18" fill="#7A5495"/>
+</svg>
