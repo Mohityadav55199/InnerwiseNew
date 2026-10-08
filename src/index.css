@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* Colors */
+  --color-orange:       #FE7209;
+  --color-ink:          #2E2E2E;
+  --color-cream:        #FAF5F2;
+  --color-white:        #FFFFFF;
+  --color-sky-blue:     #47A3F8;
+  --color-ice-blue:     #E9F5FF;
+  --color-peach:        #F9E8DF;
+  --color-placeholder:  #C2C2C2;
+  --color-mid-grey:     #686868;
+  --color-plum:         #7A5495;
+  --color-sparkle:      #FFCC03;
+  --color-page-bg:      #FAF5F2;
+  --color-footer-bg:    #2E2E2E;
+
+  /* Gradients */
+  --grad-mind:   linear-gradient(152deg, #5BBCF7 26%, #19AB4F 100%);
+  --grad-body:   linear-gradient(152deg, #FE7209 0%, #FFCF0B 88%);
+  --grad-wisdom: linear-gradient(152deg, #CB5A9F 0%, #BE7FEC 100%);
+
+  /* Shadows */
+  --shadow-card:   0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-bubble: 0 4px 12.6px rgba(0, 0, 0, 0.65);
+  --shadow-avatar: 0 0 14.3px rgba(145, 214, 255, 0.41);
+}
+
+/* ─── Base resets ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--color-page-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
+}
+
+/* ─── Button Base ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: 100px;
+  padding: 10px 30px;
+  height: 39px;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-orange);
+  border: 1px solid var(--color-orange);
+  height: 41px;
+}
+
+.btn-cream-text {
+  background-color: var(--color-orange);
+  color: var(--color-cream);
+}
+
+.btn-nav {
+  height: 35px;
+  padding: 8px 24px;
+}
+
+/* ─── Global Topographic Pattern Background (Isolated Stacking Context) ─── */
+.page-bg-pattern {
+  position: relative;
+  background-color: var(--color-page-bg);
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.page-bg-pattern::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/images/topo-pattern.png');
+  background-size: 720px 1079px;
+  background-repeat: repeat;
+  opacity: 0.10;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ─── Hero white ellipse ─── */
+.hero-ellipse {
+  position: absolute;
+  width: 1835px;
+  height: 995px;
+  background: #FFFFFF;
+  border-radius: 50%;
+  top: -302px;
+  left: calc(50% - 917.5px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Utility ─── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
