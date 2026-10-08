@@ -137,7 +137,12 @@ const Footer: React.FC = () => (
       .footer-link { transition: opacity 0.15s ease; }
       .footer-link:hover { opacity: 0.7; }
       .footer-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
-      @media (max-width: 1381px) {
+      /* Compact desktop (1240–1381px): keep all 7 columns in one row (Figma) by letting them share the width */
+      @media (min-width: 1240px) and (max-width: 1381px) {
+        .footer-inner { padding: 60px 40px 0 !important; }
+        .footer-grid { grid-template-columns: repeat(7, minmax(0, 1fr)) !important; }
+      }
+      @media (max-width: 1239px) {
         footer { height: auto !important; }
         .footer-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 32px !important; }
         .footer-inner { padding: 60px 40px 40px !important; }

@@ -227,6 +227,7 @@ const DiscoverSection: React.FC = () => (
       display: 'flex',
       justifyContent: 'center',
     }}
+    className="discover-section"
     aria-labelledby="discover-heading"
   >
     {/* Ice-blue Panel: 1280px wide (x = 79–1359 at 1440px desktop) */}
@@ -306,6 +307,13 @@ const DiscoverSection: React.FC = () => (
     <style>{`
       .need-card-text .discover-link { position: absolute; top: 122px; left: 0; }
       .discover-link:hover { opacity: 0.7; }
+      /* Compact desktop (1240–1359px, e.g. 1280/1366 laptops): keep Figma's 3×2 grid.
+         Cards need ≥375px for their text, so trim the outer padding and let the column gap shrink 30→20px. */
+      @media (min-width: 1240px) and (max-width: 1359px) {
+        .discover-section { padding: 0 16px !important; }
+        .discover-panel { padding: 60px 20px !important; }
+        .discover-grid { grid-template-columns: repeat(3, minmax(0, 380px)) !important; column-gap: clamp(20px, calc((100% - 1140px) / 2), 30px) !important; }
+      }
       @media (min-width: 1360px) { .discover-header { position: relative; left: 4.5px; } }
       .discover-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
       @media (max-width: 1024px) {
