@@ -3,17 +3,23 @@ import Button from '../../primitives/Button';
 import { APPROACH_LINKS } from '../../../config/links';
 import { ASSETS } from '../../../config/assets';
 
+/*
+ * Our Approach — full-width white band (Figma 1010:23), y 3284–3958 (674 tall) at 1440.
+ * Left column (x 183): eyebrow +159, H2 +199, body +337 (24px / 24px line boxes,
+ * box 516 wide, typed breaks + one empty line), button +533.5.
+ * Right: complete illustration group 1010:121 exported as one image,
+ * 631×567 at (702, 3355) → band-relative (+71), container-relative x +519.
+ */
 const ApproachSection: React.FC = () => (
   <section
     style={{
       backgroundColor: '#FFFFFF',
-      padding: '100px 0',
       position: 'relative',
       zIndex: 1,
     }}
+    className="approach-section"
     aria-labelledby="approach-heading"
   >
-    {/* 1075px Content Container (x = 183 to 1258 at 1440px desktop) */}
     <div
       className="approach-inner"
       style={{
@@ -21,15 +27,12 @@ const ApproachSection: React.FC = () => (
         margin: '0 auto',
         width: '100%',
         boxSizing: 'content-box',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '40px',
-        flexWrap: 'wrap',
+        position: 'relative',
+        height: '674px',
       }}
     >
-      {/* Left column (x = 183, max-width 516px) */}
-      <div style={{ maxWidth: '516px', flex: '1 1 450px' }}>
+      {/* Left column (x = 183, 516px box) */}
+      <div className="approach-text" style={{ width: '516px', maxWidth: '100%', paddingTop: '159px' }}>
         <p
           style={{
             fontFamily: 'Roboto, sans-serif',
@@ -39,7 +42,7 @@ const ApproachSection: React.FC = () => (
             letterSpacing: '0.08em',
             color: '#FE7209',
             textTransform: 'uppercase',
-            marginBottom: '8px',
+            marginBottom: '20px',
           }}
         >
           OUR APPROACH
@@ -53,26 +56,26 @@ const ApproachSection: React.FC = () => (
             fontSize: 'clamp(28px, 3.47vw, 50px)',
             lineHeight: 1.17,
             color: '#2E2E2E',
-            marginBottom: '32px',
+            marginBottom: '21px',
           }}
         >
           Human-centred.<br />Whole-person.
         </h2>
 
-        {/* Body with exact Figma line breaks */}
+        {/* Body with exact Figma line breaks (24px line boxes, empty line between paragraphs) */}
         <p
           style={{
             fontFamily: 'Roboto, sans-serif',
             fontWeight: 400,
             fontSize: 'clamp(16px, 1.67vw, 24px)',
-            lineHeight: '1.25',
+            lineHeight: '24px',
             color: '#2E2E2E',
-            marginBottom: '16px',
-            maxWidth: '516px',
+            marginBottom: '24px',
           }}
+          className="approach-body"
         >
-          Innerwise brings together psychological<br />
-          understanding, wellbeing practices and everyday<br />
+          Innerwise brings together psychological{' '}<br className="approach-break" />
+          understanding, wellbeing practices and everyday{' '}<br className="approach-break" />
           behavior change.
         </p>
         <p
@@ -82,47 +85,51 @@ const ApproachSection: React.FC = () => (
             fontSize: 'clamp(16px, 1.67vw, 24px)',
             lineHeight: '24px',
             color: '#2E2E2E',
-            marginBottom: '32px',
-            maxWidth: '516px',
+            marginBottom: '52.5px',
           }}
+          className="approach-body"
         >
-          Understand thoughts, emotions, behavior and<br />
+          Understand thoughts, emotions, behavior and{' '}<br className="approach-break" />
           relationships.
         </p>
 
-        {/* Button: "Innwise" typo preserved as-is per Figma spec */}
+        {/* Button: "Innwise" typo preserved as-is per Figma */}
         <Button variant="primary" href={APPROACH_LINKS.discoverApproach} showChevron>
           Discover the Innwise Approach
         </Button>
       </div>
 
-      {/* Right illustration: Complete Figma Group 1010:121 (652×588 at x ≈ 703) */}
-      <div
-        style={{
-          flex: '1 1 480px',
-          maxWidth: '652px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        aria-hidden="true"
-      >
+      {/* Right illustration: complete Figma group 1010:121 */}
+      <div className="approach-art" aria-hidden="true">
         <img
           src={ASSETS.approachIllustration}
           alt=""
-          width={652}
-          height={588}
-          style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }}
+          width={631}
+          height={567}
+          style={{ width: '100%', height: 'auto', display: 'block' }}
         />
       </div>
     </div>
 
     <style>{`
-      @media (max-width: 1123px) {
+      .approach-art { position: absolute; left: 519px; top: 71px; width: 631px; }
+      @media (max-width: 1279px) {
         .approach-inner {
           box-sizing: border-box !important;
-          padding: 0 24px !important;
+          padding: 100px 24px !important;
+          height: auto !important;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 40px;
+          max-width: 1180px !important;
         }
+        .approach-text { padding-top: 0 !important; flex: 1 1 420px; width: auto !important; max-width: 516px !important; }
+        .approach-art { position: relative; left: auto; top: auto; flex: 1 1 360px; width: auto; max-width: 631px; }
+      }
+      @media (max-width: 768px) {
+        .approach-break { display: none; }
+        .approach-inner { padding: 60px 24px !important; }
       }
     `}</style>
   </section>

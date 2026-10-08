@@ -13,9 +13,9 @@ interface NeedCardProps {
   imageWidth: number;
   imageHeight: number;
   imageLeftOffset: number;
+  imageTopOffset: number;
   textLeftOffset: number;
   href: string;
-  mirrored?: boolean;
 }
 
 const NeedCard: React.FC<NeedCardProps> = ({
@@ -28,9 +28,9 @@ const NeedCard: React.FC<NeedCardProps> = ({
   imageWidth,
   imageHeight,
   imageLeftOffset,
+  imageTopOffset,
   textLeftOffset,
   href,
-  mirrored = false,
 }) => (
   <div
     className="need-card"
@@ -51,8 +51,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
       style={{
         position: 'absolute',
         left: `${imageLeftOffset}px`,
-        top: '50%',
-        transform: `translateY(-50%) ${mirrored ? 'scaleX(-1)' : ''}`.trim(),
+        top: `${imageTopOffset}px`,
         width: `${imageWidth}px`,
         height: `${imageHeight}px`,
         flexShrink: 0,
@@ -64,7 +63,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
         alt={imageAlt}
         width={imageWidth}
         height={imageHeight}
-        style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+        style={{ width: '100%', height: '100%', display: 'block' }}
       />
     </div>
 
@@ -75,9 +74,9 @@ const NeedCard: React.FC<NeedCardProps> = ({
         position: 'absolute',
         left: `${textLeftOffset}px`,
         top: 0,
-        right: '16px',
+        right: '12px',
         bottom: 0,
-        paddingTop: '26px',
+        paddingTop: '30px',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -87,7 +86,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 600,
           fontSize: `${titleSize}px`,
-          lineHeight: '1.2',
+          lineHeight: '28px',
           color: '#2E2E2E',
           margin: 0,
         }}
@@ -102,7 +101,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           lineHeight: '24px',
           color: '#2E2E2E',
           marginTop: '6px',
-          marginBottom: '12px',
+          marginBottom: 0,
           whiteSpace: 'pre-line',
         }}
       >
@@ -116,8 +115,7 @@ const NeedCard: React.FC<NeedCardProps> = ({
           fontWeight: 600,
           fontSize: '16px',
           color: '#2E2E2E',
-          marginTop: 'auto',
-          paddingBottom: '20px',
+          lineHeight: 1.17,
           display: 'inline-block',
         }}
       >
@@ -139,7 +137,8 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 106,
     imageHeight: 96,
-    imageLeftOffset: 24,
+    imageLeftOffset: 30,
+    imageTopOffset: 38,
     textLeftOffset: 154,
     href: DISCOVER_LINKS.feelCalmer,
   },
@@ -153,10 +152,10 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 116,
     imageHeight: 92,
-    imageLeftOffset: 16,
+    imageLeftOffset: 38,
+    imageTopOffset: 34,
     textLeftOffset: 179,
     href: DISCOVER_LINKS.sleepBetter,
-    mirrored: true,
   },
   {
     id: 'understand',
@@ -168,7 +167,8 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 102,
     imageHeight: 98,
-    imageLeftOffset: 24,
+    imageLeftOffset: 38,
+    imageTopOffset: 31,
     textLeftOffset: 163,
     href: DISCOVER_LINKS.understandMyself,
   },
@@ -182,7 +182,8 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 117,
     imageHeight: 90,
-    imageLeftOffset: 16,
+    imageLeftOffset: 22,
+    imageTopOffset: 41,
     textLeftOffset: 154,
     href: DISCOVER_LINKS.buildHabits,
   },
@@ -196,10 +197,10 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 98,
     imageHeight: 83,
-    imageLeftOffset: 24,
+    imageLeftOffset: 25,
+    imageTopOffset: 47,
     textLeftOffset: 140,
     href: DISCOVER_LINKS.feelConnected,
-    mirrored: true,
   },
   {
     id: 'grow',
@@ -211,7 +212,8 @@ const NEED_CARDS: NeedCardProps[] = [
     imageAlt: '',
     imageWidth: 91,
     imageHeight: 89,
-    imageLeftOffset: 28,
+    imageLeftOffset: 21,
+    imageTopOffset: 41,
     textLeftOffset: 121,
     href: DISCOVER_LINKS.growThroughChange,
   },
@@ -239,8 +241,8 @@ const DiscoverSection: React.FC = () => (
         boxSizing: 'border-box',
       }}
     >
-      {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+      {/* Header — Figma's header text block is centred 4.5px right of the panel centre */}
+      <div className="discover-header" style={{ textAlign: 'center', marginBottom: '30px' }}>
         <p
           style={{
             fontFamily: 'Roboto, sans-serif',
@@ -250,7 +252,7 @@ const DiscoverSection: React.FC = () => (
             letterSpacing: '0.08em',
             color: '#FE7209',
             textTransform: 'uppercase',
-            marginBottom: '8px',
+            marginBottom: '21px',
           }}
         >
           DISCOVER WHAT YOU NEED TODAY
@@ -263,7 +265,7 @@ const DiscoverSection: React.FC = () => (
             fontSize: 'clamp(28px, 3.47vw, 50px)',
             lineHeight: 1.17,
             color: '#2E2E2E',
-            marginBottom: '16px',
+            marginBottom: '21.5px',
           }}
         >
           What would feel better right now?
@@ -273,10 +275,10 @@ const DiscoverSection: React.FC = () => (
             fontFamily: 'Roboto, sans-serif',
             fontWeight: 400,
             fontSize: 'clamp(16px, 1.67vw, 24px)',
-            lineHeight: 1.35,
+            lineHeight: 1.1667,
             color: '#2E2E2E',
             margin: '0 auto',
-            maxWidth: '900px',
+            maxWidth: '1000px',
             whiteSpace: 'pre-line',
           }}
         >
@@ -302,7 +304,9 @@ const DiscoverSection: React.FC = () => (
     </div>
 
     <style>{`
+      .need-card-text .discover-link { position: absolute; top: 122px; left: 0; }
       .discover-link:hover { opacity: 0.7; }
+      @media (min-width: 1360px) { .discover-header { position: relative; left: 4.5px; } }
       .discover-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
       @media (max-width: 1024px) {
         .discover-panel { padding: 40px 20px !important; }
@@ -326,6 +330,7 @@ const DiscoverSection: React.FC = () => (
           margin-right: 16px !important;
           flex-shrink: 0 !important;
         }
+        .need-card-text .discover-link { position: static !important; margin-top: 10px !important; }
         .need-card-text {
           position: relative !important;
           left: 0 !important;

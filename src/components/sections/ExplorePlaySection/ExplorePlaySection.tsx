@@ -9,6 +9,8 @@ interface ExploreTileData {
   description: string;
   circleColor: string;
   iconSrc: string;
+  iconW: number;
+  iconH: number;
 }
 
 const EXPLORE_TILES: ExploreTileData[] = [
@@ -17,42 +19,42 @@ const EXPLORE_TILES: ExploreTileData[] = [
     title: 'Did You Know?',
     description: 'Discover fascinating insights about your body, mind, behaviour and everyday patterns.',
     circleColor: '#CB5A9F',
-    iconSrc: ASSETS.exploreBook,
+    iconSrc: ASSETS.exploreBook, iconW: 32.39, iconH: 32,
   },
   {
     id: 'tiny-experiments-1',
     title: 'Tiny Experiments',
     description: 'Try something different and notice what changes.',
     circleColor: '#7A5495',
-    iconSrc: ASSETS.exploreFlask,
+    iconSrc: ASSETS.exploreFlask, iconW: 28.04, iconH: 32,
   },
   {
     id: 'quizzes',
     title: 'Quizzes',
     description: 'Explore your thinking, stress, emotional and habit patterns.',
     circleColor: '#47A3F8',
-    iconSrc: ASSETS.exploreQuiz,
+    iconSrc: ASSETS.exploreQuiz, iconW: 27.2, iconH: 32,
   },
   {
     id: 'challenges',
     title: 'Challenges',
     description: 'Small actions. Simple goals. Meaningful progress.',
     circleColor: '#00A654',
-    iconSrc: ASSETS.exploreFlag,
+    iconSrc: ASSETS.exploreFlag, iconW: 25.23, iconH: 32,
   },
   {
     id: 'tiny-experiments-2',
     title: 'Tiny Experiments',
     description: 'Try something different and notice what changes.',
     circleColor: '#F7B600',
-    iconSrc: ASSETS.exploreFlask,
+    iconSrc: ASSETS.exploreFlask, iconW: 28.04, iconH: 32,
   },
   {
     id: 'quick-practices',
     title: 'Quick Practices',
     description: 'Short experiences you can fit into your day.',
     circleColor: '#DE4C3F',
-    iconSrc: ASSETS.explorePlay,
+    iconSrc: ASSETS.explorePlay, iconW: 24.63, iconH: 31.52,
   },
 ];
 
@@ -65,6 +67,7 @@ const ExplorePlaySection: React.FC = () => {
         overflow: 'hidden',
         padding: '60px 0 60px',
         zIndex: 1,
+        boxSizing: 'border-box',
       }}
       aria-labelledby="explore-play-heading"
     >
@@ -73,7 +76,7 @@ const ExplorePlaySection: React.FC = () => {
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '50%',
+          top: '491px',
           left: 'calc(50% + 10px)',
           transform: 'translate(-50%, -50%)',
           width: '1574px',
@@ -138,7 +141,7 @@ const ExplorePlaySection: React.FC = () => {
         }}
       >
         {/* Centered Header */}
-        <div style={{ textAlign: 'center', marginBottom: '40px', maxWidth: '820px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '60px', maxWidth: '820px' }}>
           <p
             style={{
               fontFamily: 'Roboto, sans-serif',
@@ -148,7 +151,7 @@ const ExplorePlaySection: React.FC = () => {
               letterSpacing: '0.08em',
               color: '#FE7209',
               textTransform: 'uppercase',
-              marginBottom: '8px',
+              marginBottom: '20px',
             }}
           >
             EXPLORE & PLAY
@@ -162,7 +165,7 @@ const ExplorePlaySection: React.FC = () => {
               fontSize: 'clamp(32px, 4vw, 50px)',
               lineHeight: '1.17',
               color: '#2E2E2E',
-              margin: '16px 0 20px',
+              margin: '0 0 21px',
             }}
           >
             Learn about yourself.
@@ -174,8 +177,8 @@ const ExplorePlaySection: React.FC = () => {
             style={{
               fontFamily: 'Roboto, sans-serif',
               fontWeight: 400,
-              fontSize: '24px',
-              lineHeight: '1.25',
+              fontSize: 'clamp(18px, 1.67vw, 24px)',
+              lineHeight: 1.17,
               color: '#2E2E2E',
               margin: 0,
             }}
@@ -206,7 +209,7 @@ const ExplorePlaySection: React.FC = () => {
                 borderRadius: '10px',
                 width: '277px',
                 height: '215px',
-                padding: '24px 20px',
+                padding: '30px 20px 0',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
@@ -226,31 +229,33 @@ const ExplorePlaySection: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginBottom: '10px',
+                  flexShrink: 0,
                 }}
               >
                 <img
                   src={tile.iconSrc}
                   alt=""
-                  width={24}
-                  height={24}
+                  width={tile.iconW}
+                  height={tile.iconH}
                   aria-hidden="true"
                   style={{
-                    width: '24px',
-                    height: '24px',
+                    width: `${tile.iconW}px`,
+                    height: `${tile.iconH}px`,
                     display: 'block',
                   }}
                 />
               </div>
 
-              {/* Title */}
+              {/* Title (tile 1's title sits 4px right of centre in Figma) */}
               <h3
+                className={`explore-tile-title explore-tile-title--${tile.id}`}
                 style={{
                   fontFamily: 'Roboto, sans-serif',
                   fontWeight: 600,
                   fontSize: '24px',
-                  lineHeight: '1.2',
+                  lineHeight: 1.17,
                   color: '#2E2E2E',
-                  margin: '0 0 8px',
+                  margin: '0 0 9.9px',
                 }}
               >
                 {tile.title}
@@ -262,7 +267,7 @@ const ExplorePlaySection: React.FC = () => {
                   fontFamily: 'Roboto, sans-serif',
                   fontWeight: 400,
                   fontSize: '16px',
-                  lineHeight: '1.25',
+                  lineHeight: 1.17,
                   color: '#2E2E2E',
                   margin: 0,
                   maxWidth: '237px',
@@ -283,6 +288,9 @@ const ExplorePlaySection: React.FC = () => {
           Explore & Play
         </Button>
       </div>
+      <style>{`
+        @media (min-width: 1180px) { .explore-tile-title--did-you-know { position: relative; left: 4px; } }
+      `}</style>
     </section>
   );
 };

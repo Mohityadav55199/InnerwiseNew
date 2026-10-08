@@ -62,7 +62,7 @@ const FAQSection: React.FC = () => {
   return (
     <section
       style={{
-        padding: '60px 0 100px',
+        padding: '100px 0',
         position: 'relative',
         zIndex: 1,
       }}
@@ -79,7 +79,7 @@ const FAQSection: React.FC = () => {
         }}
       >
         {/* Left-Aligned Header at x = 183 */}
-        <div style={{ marginBottom: '32px' }}>
+        <div style={{ marginBottom: '40.5px' }}>
           <p
             style={{
               fontFamily: 'Roboto, sans-serif',
@@ -89,7 +89,7 @@ const FAQSection: React.FC = () => {
               letterSpacing: '0.08em',
               color: '#FE7209',
               textTransform: 'uppercase',
-              marginBottom: '8px',
+              marginBottom: '20px',
             }}
           >
             YOUR QUESTIONS, ANSWERED
@@ -132,13 +132,11 @@ const FAQSection: React.FC = () => {
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.25)',
                   overflow: 'hidden',
                   width: '100%',
-                  height: isOpen ? '136px' : 'auto',
-                  minHeight: '136px',
+                  minHeight: isOpen ? '136px' : '90px',
                   boxSizing: 'border-box',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
+                  position: 'relative',
                 }}
+                className="faq-item"
               >
                 <button
                   id={headerId}
@@ -148,11 +146,8 @@ const FAQSection: React.FC = () => {
                   onClick={() => toggleItem(item.id)}
                   style={{
                     width: '100%',
-                    padding: '20px 50px 10px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '20px',
+                    padding: isOpen ? '30px 110px 10px 50px' : '30px 110px 32px 50px',
+                    display: 'block',
                     backgroundColor: 'transparent',
                     border: 'none',
                     textAlign: 'left',
@@ -166,9 +161,9 @@ const FAQSection: React.FC = () => {
                       fontFamily: 'Roboto, sans-serif',
                       fontWeight: 600,
                       fontSize: 'clamp(18px, 2.5vw, 24px)',
-                      lineHeight: '1.17',
+                      lineHeight: '28px',
                       color: '#2E2E2E',
-                      flex: 1,
+                      display: 'block',
                     }}
                   >
                     {item.question}
@@ -181,7 +176,7 @@ const FAQSection: React.FC = () => {
                     width={30}
                     height={30}
                     aria-hidden="true"
-                    style={{ width: '30px', height: '30px', flexShrink: 0, display: 'block' }}
+                    style={{ width: '30px', height: '30px', display: 'block', position: 'absolute', right: '50px', top: '50%', transform: 'translateY(-50%)' }}
                   />
                 </button>
 
@@ -192,8 +187,8 @@ const FAQSection: React.FC = () => {
                   aria-labelledby={headerId}
                   hidden={!isOpen}
                   style={{
-                    padding: '0 50px 20px',
-                    maxWidth: '820px',
+                    padding: '0 50px 30px',
+                    maxWidth: '799px',
                     boxSizing: 'border-box',
                   }}
                 >
@@ -202,7 +197,7 @@ const FAQSection: React.FC = () => {
                       fontFamily: 'Roboto, sans-serif',
                       fontWeight: 400,
                       fontSize: '16px',
-                      lineHeight: '1.25',
+                      lineHeight: 1.17,
                       color: '#2E2E2E',
                       margin: 0,
                     }}
@@ -223,13 +218,12 @@ const FAQSection: React.FC = () => {
             box-sizing: border-box !important;
             padding: 0 24px !important;
           }
-          .faq-inner > div:last-child > div {
-            height: auto !important;
-          }
+          .faq-item { min-height: 0 !important; }
         }
         @media (max-width: 768px) {
-          .faq-trigger-btn { padding: 20px 24px 10px !important; }
-          div[role="region"] { padding: 0 24px 20px !important; }
+          .faq-trigger-btn { padding: 20px 64px 10px 24px !important; }
+          .faq-item img { right: 20px !important; }
+          div[role="region"] { padding: 0 64px 20px 24px !important; }
         }
       `}</style>
     </section>

@@ -27,7 +27,7 @@
   /* Shadows */
   --shadow-card:   0 4px 12px rgba(0, 0, 0, 0.25);
   --shadow-bubble: 0 4px 12.6px rgba(0, 0, 0, 0.65);
-  --shadow-avatar: 0 0 14.3px rgba(145, 214, 255, 0.41);
+  --shadow-avatar: 0 0 14.3px 11px rgba(145, 214, 255, 0.41);
 }
 
 /* ─── Base resets ─── */
@@ -131,17 +131,23 @@ button:focus-visible {
   isolation: isolate;
 }
 
-.page-bg-pattern::before {
+/* Figma tiles "image 63" (720×1079) in two columns from y 123 (rows 123 / 1202 / 2281)
+   and again from y 3834 (rows 3834 / 4913 / 5992 / 7071). The tile is pre-flattened at
+   Figma's 10 % layer opacity over #FAF5F2, so it is drawn at full opacity here. */
+.page-bg-pattern::before,
+.page-bg-pattern::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image: url('/assets/images/topo-pattern.png');
+  left: 0;
+  right: 0;
+  background-image: url('/assets/images/topo-pattern.webp');
   background-size: 720px 1079px;
   background-repeat: repeat;
-  opacity: 0.10;
   pointer-events: none;
   z-index: -1;
 }
+.page-bg-pattern::before { top: 123px; height: 3711px; background-position: calc(50% - 360px) 0; }
+.page-bg-pattern::after  { top: 3834px; bottom: 0; background-position: calc(50% - 360px) 0; }
 
 /* ─── Hero white ellipse ─── */
 .hero-ellipse {
@@ -150,7 +156,7 @@ button:focus-visible {
   height: 995px;
   background: #FFFFFF;
   border-radius: 50%;
-  top: -302px;
+  top: -303px; /* page-relative y = -198 (hero starts at 105) */
   left: calc(50% - 917.5px);
   pointer-events: none;
   z-index: 0;

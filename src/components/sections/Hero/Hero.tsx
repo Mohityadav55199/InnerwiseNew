@@ -22,9 +22,9 @@ const InnerCompassBadge: React.FC = () => (
     <img
       src={ASSETS.innerCompassBadge}
       alt=""
-      width={102}
-      height={102}
-      style={{ width: '102px', height: '102px', display: 'block' }}
+      width={79}
+      height={82}
+      style={{ position: 'absolute', left: '18px', top: '6px', width: '79px', height: '82px', display: 'block' }}
     />
   </div>
 );
@@ -94,22 +94,22 @@ const HeroTierA: React.FC = () => (
     className="hero-tier-a"
     style={{
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
+      gridTemplateColumns: 'minmax(0, 564px) minmax(0, 1fr)',
       gap: '40px',
-      paddingTop: '31px',
+      paddingTop: '136px',
       position: 'relative',
       zIndex: 1,
     }}
   >
     {/* Left Column (x = 183 at 1440px desktop) */}
-    <div style={{ position: 'relative', width: '564px', maxWidth: '100%' }}>
+    <div style={{ position: 'relative', width: '100%', maxWidth: '564px', minWidth: 0 }}>
       <InnerCompassBadge />
       <h1
         style={{
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 700,
           fontSize: 'clamp(32px, 3.47vw, 50px)',
-          lineHeight: 1.17,
+          lineHeight: 1.17, /* Figma line pitch 58.5px (box 241 → 358) */
           color: '#FE7209',
           maxWidth: '511px',
           margin: 0,
@@ -124,11 +124,10 @@ const HeroTierA: React.FC = () => (
           fontFamily: 'Roboto, sans-serif',
           fontWeight: 600,
           fontSize: 'clamp(16px, 1.67vw, 24px)',
-          lineHeight: '120%',
+          lineHeight: 1.2084,
           color: '#2E2E2E',
-          marginTop: '26px',
-          width: '564px',
-          maxWidth: '100%',
+          marginTop: '22px', /* keeps the subhead box at y 380 */
+          maxWidth: '564px',
           marginBottom: 0,
         }}
       >
@@ -138,7 +137,7 @@ const HeroTierA: React.FC = () => (
       </p>
 
       {/* Buttons */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginTop: '27px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginTop: '26px', flexWrap: 'wrap' }}>
         <Button variant="primary" href={HERO_LINKS.beginJourney} showChevron>
           Begin Your Journey
         </Button>
@@ -159,7 +158,7 @@ const HeroTierB: React.FC = () => (
     className="hero-tier-b"
     style={{
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-between',
       gap: '40px',
       paddingTop: '392px',
@@ -176,9 +175,11 @@ const HeroTierB: React.FC = () => (
         lineHeight: 1.17,
         color: '#2E2E2E',
         maxWidth: '479px',
-        margin: 0,
-        flexShrink: 0,
+        margin: '192px 0 0',
+        flexShrink: 1,
+        minWidth: 0,
       }}
+      className="hero-statement"
     >
       <strong style={{ fontWeight: 600 }}>Innerwise</strong>
       {' '}
@@ -186,7 +187,7 @@ const HeroTierB: React.FC = () => (
       <span style={{ fontWeight: 500, color: '#FE7209' }}>wellbeing practices</span>
       <span style={{ fontWeight: 500 }}> and everyday tools to help you </span>
       <span style={{ fontWeight: 500, color: '#FE7209' }}>understand yourself</span>
-      <span style={{ fontWeight: 500 }}> more deeply and<br />create meaningful, sustainable change.</span>
+      <span style={{ fontWeight: 500 }}> more deeply and{' '}<br className="hero-statement-break" />create meaningful, sustainable change.</span>
     </p>
 
     {/* HeroMedia slot — 520×517 right-aligned at (739, 897) */}
@@ -222,6 +223,9 @@ const Hero: React.FC = () => (
     </div>
 
     <style>{`
+      @media (max-width: 1399px) {
+        .hero-statement-break { display: none; }
+      }
       @media (max-width: 1123px) {
         .hero-container {
           box-sizing: border-box !important;
@@ -229,10 +233,10 @@ const Hero: React.FC = () => (
         }
       }
       @media (max-width: 1024px) {
-        .hero-tier-a { grid-template-columns: 1fr !important; padding-top: 60px !important; }
+        .hero-tier-a { grid-template-columns: minmax(0, 1fr) !important; padding-top: 60px !important; }
         .hero-tier-a > div:last-child { display: none !important; }
         .hero-tier-b { flex-direction: column !important; align-items: flex-start !important; gap: 32px !important; padding-top: 60px !important; }
-        .hero-tier-b > p { max-width: 100% !important; }
+        .hero-tier-b > p { max-width: 100% !important; margin-top: 0 !important; }
         .hero-tier-b > div { width: 100% !important; max-width: 520px !important; }
         .hero-badge { position: relative !important; left: 0 !important; top: 0 !important; margin-bottom: 16px !important; }
       }

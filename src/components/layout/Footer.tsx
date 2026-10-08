@@ -96,7 +96,7 @@ const Footer: React.FC = () => (
       <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 186px)', gap: '0px', justifyContent: 'space-between' }}>
         {FOOTER_COLUMNS.map((col) => (
           <div key={col.heading} style={{ paddingRight: '8px' }}>
-            <p style={{ fontWeight: 600, fontSize: '18px', color: '#FAF5F2', marginBottom: '20px', lineHeight: '16px' }}>
+            <p style={{ fontWeight: 600, fontSize: '18px', color: '#FAF5F2', marginBottom: '24.4px', lineHeight: '21.1px' }}>
               {col.heading}
             </p>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -117,17 +117,17 @@ const Footer: React.FC = () => (
       </div>
 
       {/* Divider at +414px (height 1px, 20% white opacity) */}
-      <div style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.2)', marginTop: '46px' }} />
+      <div className="footer-divider" style={{ height: '1px', backgroundColor: 'rgba(255,255,255,0.2)', marginTop: '68.5px' }} />
 
       {/* Bottom row at +455px */}
-      <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '40px' }}>
+      <div className="footer-bottom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingTop: '40px' }}>
         <div>
           <p style={{ fontWeight: 700, fontSize: '28px', color: '#FFFFFF', lineHeight: 1.17, margin: 0 }}>INNERWISE</p>
-          <p style={{ fontWeight: 400, fontSize: '18px', color: '#FFFFFF', marginTop: '12px', lineHeight: 1.17, margin: '12px 0 0' }}>
+          <p style={{ fontWeight: 400, fontSize: '18px', color: '#FFFFFF', lineHeight: 1.17, margin: '25.2px 0 0' }}>
             Body • Mind • Inner Wisdom • Habits
           </p>
         </div>
-        <p style={{ fontWeight: 400, fontSize: '20px', color: '#FFFFFF', textAlign: 'right', lineHeight: 1.17, margin: 0 }}>
+        <p style={{ fontWeight: 400, fontSize: '20px', color: '#FFFFFF', textAlign: 'right', lineHeight: 1.17, margin: '14px 0 0' }}>
           Understand yourself. Live better.
         </p>
       </div>
@@ -137,17 +137,18 @@ const Footer: React.FC = () => (
       .footer-link { transition: opacity 0.15s ease; }
       .footer-link:hover { opacity: 0.7; }
       .footer-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
-      @media (max-width: 1360px) {
+      @media (max-width: 1381px) {
         footer { height: auto !important; }
         .footer-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 32px !important; }
         .footer-inner { padding: 60px 40px 40px !important; }
+        .footer-divider { margin-top: 48px !important; }
       }
       @media (max-width: 768px) {
         footer { height: auto !important; }
         .footer-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 32px !important; }
         .footer-inner { padding: 40px 20px 30px !important; }
         .footer-bottom { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
-        .footer-bottom p:last-child { text-align: left !important; }
+        .footer-bottom p:last-child { text-align: left !important; margin-top: 0 !important; }
       }
       @media (max-width: 430px) {
         .footer-grid { grid-template-columns: 1fr !important; }

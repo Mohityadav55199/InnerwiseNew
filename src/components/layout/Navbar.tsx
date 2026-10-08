@@ -75,11 +75,12 @@ const Navbar: React.FC = () => {
             aria-hidden="true"
             style={{ width: '60px', height: '34px', display: 'block' }}
           />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          {/* Wordmark lockup: Figma glyphs at y 60 (InnerWise) and y 80 (tagline) */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', position: 'relative', top: '-3.5px' }}>
             <span style={{ fontWeight: 500, fontSize: '20px', lineHeight: 1.2, color: '#000000', fontFamily: 'Roboto, sans-serif' }}>
               InnerWise
             </span>
-            <span style={{ fontWeight: 400, fontSize: '10px', lineHeight: 1.17, color: '#000000', fontFamily: 'Roboto, sans-serif' }}>
+            <span style={{ fontWeight: 400, fontSize: '10px', lineHeight: 1.17, color: '#000000', fontFamily: 'Roboto, sans-serif', marginTop: '-3px' }}>
               Everything is within
             </span>
           </div>
@@ -173,7 +174,7 @@ const Navbar: React.FC = () => {
         .nav-link { transition: color 0.15s ease; }
         .nav-link:hover { color: #FE7209 !important; }
         .nav-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
-        @media (max-width: 1024px) {
+        @media (max-width: 1120px) {
           .nav-links-desktop { display: none !important; }
           .nav-actions-desktop { display: none !important; }
           .hamburger-btn { display: flex !important; }

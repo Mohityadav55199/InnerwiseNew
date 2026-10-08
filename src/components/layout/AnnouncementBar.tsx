@@ -6,6 +6,7 @@ const AnnouncementBar: React.FC = () => (
       backgroundColor: '#47A3F8',
       padding: '12px 24px',
       minHeight: '45px',
+      marginBottom: '1px', /* Figma: 1px gap between bar (0–45) and navbar (46–105) */
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

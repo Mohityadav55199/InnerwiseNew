@@ -41,7 +41,6 @@ const ResetCard: React.FC<ResetCardProps> = ({
         borderRadius: '10px',
         overflow: 'hidden',
         flexShrink: 0,
-        backgroundColor: '#E2E8F0',
       }}
     >
       <img
@@ -49,11 +48,11 @@ const ResetCard: React.FC<ResetCardProps> = ({
         alt={imageAlt}
         width={221}
         height={197}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        style={{ width: '100%', height: '100%', display: 'block' }}
       />
     </div>
 
-    {/* Title at card +237 (20px gap below image) */}
+    {/* Title: Figma glyphs sit at card +236 → line box at +232 (15px below the image) */}
     <p
       style={{
         fontFamily: 'Roboto, sans-serif',
@@ -62,7 +61,7 @@ const ResetCard: React.FC<ResetCardProps> = ({
         lineHeight: '1.4',
         letterSpacing: '-0.02em',
         color: '#2E2E2E',
-        margin: '12px 0 6px',
+        margin: '15px 0 0',
         textAlign: centerTitle ? 'center' : 'left',
       }}
     >
@@ -75,17 +74,17 @@ const ResetCard: React.FC<ResetCardProps> = ({
         display: 'flex',
         alignItems: 'center',
         gap: '6px',
-        marginTop: 'auto',
-        justifyContent: centerTitle ? 'center' : 'flex-start',
+        marginTop: '5.6px',
+        justifyContent: 'flex-start', /* meta is left-aligned on all four Figma cards, incl. card 4 */
       }}
     >
       <img
         src={ASSETS.bookIcon}
         alt=""
-        width={18}
-        height={18}
+        width={18.64}
+        height={18.64}
         aria-hidden="true"
-        style={{ width: '18px', height: '18px', display: 'block' }}
+        style={{ width: '18.64px', height: '18.64px', display: 'block' }}
       />
       <span
         style={{
@@ -108,26 +107,26 @@ const RESET_CARDS: ResetCardProps[] = [
     title: 'Pause • Breathe • Notice',
     meta: '30 Seconds',
     imageSrc: ASSETS.resetBreathe,
-    imageAlt: 'Water droplet',
+    imageAlt: 'Water droplet rippling on a calm surface',
   },
   {
     title: 'Reset your attention',
     meta: '1 Minute',
     imageSrc: ASSETS.resetAttention,
-    imageAlt: 'Forest trees',
+    imageAlt: 'Sunlight through a misty forest',
   },
   {
     title: 'Release tension and reconnect',
     meta: '3 Minute',
     imageSrc: ASSETS.resetTension,
-    imageAlt: 'Flower petals',
+    imageAlt: 'Close-up of pink flower petals',
   },
   {
-    // Card 4 center-aligned title per Figma spec §4.7
+    // Card 4: centre-aligned title per Figma spec §4.7 (its meta row stays left-aligned, as in Figma)
     title: 'Create space for Calm & Clarity',
     meta: '5 Minute',
     imageSrc: ASSETS.resetCalm,
-    imageAlt: 'Mountain lake',
+    imageAlt: 'Mountain lake under low clouds',
     centerTitle: true,
   },
 ];
@@ -135,7 +134,7 @@ const RESET_CARDS: ResetCardProps[] = [
 const QuickResetSection: React.FC = () => (
   <section
     style={{
-      padding: '40px 0 60px',
+      padding: '100px 0',
       position: 'relative',
       zIndex: 1,
     }}
@@ -163,7 +162,7 @@ const QuickResetSection: React.FC = () => (
             letterSpacing: '0.08em',
             color: '#FE7209',
             textTransform: 'uppercase',
-            marginBottom: '8px',
+            marginBottom: '20px',
           }}
         >
           QUICK RESET
@@ -176,7 +175,7 @@ const QuickResetSection: React.FC = () => (
             fontSize: 'clamp(28px, 3.47vw, 50px)',
             lineHeight: 1.17,
             color: '#2E2E2E',
-            marginBottom: '16px',
+            marginBottom: '10.5px',
           }}
         >
           Need a moment? Start here.
@@ -199,11 +198,12 @@ const QuickResetSection: React.FC = () => (
       <div
         style={{
           display: 'flex',
-          gap: '30px',
           justifyContent: 'center',
           flexWrap: 'wrap',
           width: '100%',
           marginBottom: '40px',
+          position: 'relative',
+          left: '-1.5px',
         }}
         className="reset-grid"
       >
@@ -213,10 +213,22 @@ const QuickResetSection: React.FC = () => (
       </div>
 
       {/* Centered Button (210×39) */}
-      <Button variant="primary" href={QUICKRESET_LINKS.tryQuickReset} showChevron>
+      <Button variant="primary" href={QUICKRESET_LINKS.tryQuickReset} showChevron className="btn-quick-reset">
         Try a Quick Reset
       </Button>
     </div>
+    <style>{`
+      .reset-grid > .reset-card + .reset-card { margin-left: 30px; }
+      .reset-grid > .reset-card:nth-child(3) { margin-left: 25px; }
+      .btn-quick-reset { width: 210px; }
+      @media (max-width: 1180px) {
+        .reset-grid { left: 0 !important; gap: 30px; }
+        .reset-grid > .reset-card + .reset-card, .reset-grid > .reset-card:nth-child(3) { margin-left: 0; }
+      }
+      @media (max-width: 1180px) and (min-width: 621px) {
+        .reset-grid { max-width: 552px; margin-left: auto; margin-right: auto; }
+      }
+    `}</style>
   </section>
 );
 

@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Design source files (full Figma export, raw extracted rasters, superseded assets) — never shipped
+design-source/
