@@ -4,23 +4,24 @@
  * Use PLACEHOLDER for destinations not yet specified by the client.
  * Do NOT scatter href="#" or invent real URLs throughout components.
  *
- * Per INNERWISE_FIGMA_IMPLEMENTATION_SPEC.md §16 Q7:
- * Link targets are NOT SPECIFIED. Placeholders used until confirmed.
+ * Link targets are NOT SPECIFIED by the client, so PLACEHOLDER is used until confirmed.
+ * Links whose destination is a section of this page use that section's id instead.
  */
 
 /** Placeholder for all unspecified link destinations */
 export const PLACEHOLDER = '#' as const;
 
 export const NAV_LINKS = {
-  home:        PLACEHOLDER,
-  yourSpace:   PLACEHOLDER,
+  home:          '/',            // the homepage itself (logo link)
+  yourSpace:     PLACEHOLDER,
   organizations: PLACEHOLDER,
-  programs:    PLACEHOLDER,
-  wellnessHub: PLACEHOLDER,
-  about:       PLACEHOLDER,
-  help:        PLACEHOLDER,
-  signIn:      PLACEHOLDER,
-  getStarted:  PLACEHOLDER,
+  programs:      PLACEHOLDER,
+  wellnessHub:   PLACEHOLDER,
+  resources:     PLACEHOLDER,
+  about:         PLACEHOLDER,
+  help:          PLACEHOLDER,
+  signIn:        PLACEHOLDER,
+  getStarted:    PLACEHOLDER,
 } as const;
 
 export const HERO_LINKS = {
@@ -34,12 +35,13 @@ export const DISCOVER_LINKS = {
   understandMyself: PLACEHOLDER,
   buildHabits:      PLACEHOLDER,
   feelConnected:    PLACEHOLDER,
-  growThroughChange: PLACEHOLDER,
+  findGrowth:       PLACEHOLDER,
 } as const;
 
 export const FRAMEWORK_LINKS = {
   exploreMind:  PLACEHOLDER,
   exploreBody:  PLACEHOLDER,
+  exploreWisdom: PLACEHOLDER,
   exploreHabits: PLACEHOLDER,
 } as const;
 
@@ -59,6 +61,11 @@ export const EXPLORE_LINKS = {
   explorePlay: PLACEHOLDER,
 } as const;
 
+export const EXPERTS_LINKS = {
+  /* Figma reuses the Approach CTA label here, so it points at the Approach section */
+  discoverApproach: '#approach',
+} as const;
+
 export const CTA_LINKS = {
   startJourney: PLACEHOLDER,
 } as const;
@@ -70,7 +77,7 @@ export const FOOTER_LINKS = {
   mind:           PLACEHOLDER,
   innerWisdom:    PLACEHOLDER,
   habits:         PLACEHOLDER,
-  explorePlay:    PLACEHOLDER,
+  explorePlay:    '#explore-play',
   library:        PLACEHOLDER,
   selfDiscovery:  PLACEHOLDER,
   // For Organisations
@@ -92,7 +99,7 @@ export const FOOTER_LINKS = {
   integratedWellbeing: PLACEHOLDER,
   // Products
   innerwiseApp:        PLACEHOLDER,
-  aiCompanion:         PLACEHOLDER,
+  aiCompanion:         '#ai-companion',
   guidedPractices:     PLACEHOLDER,
   courses:             PLACEHOLDER,
   personalisedJourneys: PLACEHOLDER,
@@ -109,14 +116,14 @@ export const FOOTER_LINKS = {
   // About
   aboutInnerwise: PLACEHOLDER,
   ourStory:       PLACEHOLDER,
-  ourFramework:   PLACEHOLDER,
-  ourApproach:    PLACEHOLDER,
-  ourExperts:     PLACEHOLDER,
+  ourFramework:   '#framework',
+  ourApproach:    '#approach',
+  ourExperts:     '#experts',
   careers:        PLACEHOLDER,
   partnerships:   PLACEHOLDER,
   // Help
   gettingStarted:     PLACEHOLDER,
-  faqs:               PLACEHOLDER,
+  faqs:               '#faq',
   accountMembership:  PLACEHOLDER,
   appSupport:         PLACEHOLDER,
   contactUs:          PLACEHOLDER,

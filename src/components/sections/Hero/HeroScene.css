@@ -1,0 +1,85 @@
+/* Hero video panel — 1cqw = 1% of the panel width */
+.hs {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  overflow: hidden;
+  background:
+    radial-gradient(62% 48% at 50% 40%, rgba(254, 114, 9, 0.42) 0%, rgba(254, 114, 9, 0.14) 46%, rgba(254, 114, 9, 0) 76%),
+    #161616;
+}
+.hs-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+
+.hs-pill {
+  position: absolute;
+  left: 5.6cqw;
+  top: 5.6cqw;
+  padding: 1.7cqw 3.9cqw;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  font-size: max(12px, 2.9cqw);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ── Play button ──────────────────────────────────────── */
+.hs-play {
+  position: absolute;
+  left: 50%;
+  top: 29%;
+  width: 24cqw;
+  height: 24cqw;
+  margin: -12cqw 0 0 -12cqw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  z-index: 2;
+}
+button.hs-play { cursor: pointer; }
+button.hs-play:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 4px; }
+.hs-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(254, 114, 9, 0.22);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+  animation: hs-pulse 3s ease-in-out infinite;
+}
+.hs-play-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 17cqw;
+  height: 17cqw;
+  border-radius: 50%;
+  background: #FE7209;
+  color: #FFFFFF;
+  box-shadow: 0 2cqw 6cqw rgba(254, 114, 9, 0.5);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.hs-play-btn svg { width: 36%; height: 36%; margin-left: 6%; }
+@keyframes hs-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.6; } }
+
+/* ── Mascot ───────────────────────────────────────────── */
+.hs-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: -4cqw;
+  width: 34cqw;
+  margin-left: -17cqw;
+  transform-origin: 50% 100%;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hs-mascot img { display: block; width: 100%; height: auto; animation: hs-float 5.5s ease-in-out infinite; filter: drop-shadow(0 3cqw 5cqw rgba(0, 0, 0, 0.45)); }
+@keyframes hs-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.2cqw); } }
+
+/* ── Hover: the mascot hops up and tilts, the play button swells ── */
+.hs:hover .hs-mascot { transform: translateY(-3.4cqw) rotate(-3deg) scale(1.04); }
+.hs:hover .hs-play-btn { transform: scale(1.12); box-shadow: 0 2.4cqw 8cqw rgba(254, 114, 9, 0.7); }
+.hs:hover .hs-ring { transform: scale(1.22); background: rgba(254, 114, 9, 0.3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hs-ring, .hs-mascot img { animation: none; }
+  .hs-mascot, .hs-play-btn, .hs-ring { transition: none; }
+}

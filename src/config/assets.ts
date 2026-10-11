@@ -1,6 +1,6 @@
 /**
  * ASSET MANIFEST — every asset below is rendered directly from the Figma
- * "Desktop - Home" frame (1010:8). Rasters were exported at 2x with Figma's
+ * "Desktop - Home" frame (rev. 2 for the Discover illustrations and Experts visual). Rasters were exported at 2x with Figma's
  * own crop / mirror / blur already applied (layer-isolated, transparent
  * background); vectors are the original Figma paths with tight viewBoxes.
  * Comments give the Figma node and the frame-relative position (x, y, w × h).
@@ -20,21 +20,21 @@ export const ASSETS = {
   // ── Hero ─────────────────────────────────────────────────────────
   /** 1010:66 — Inner Compass badge (compass render + curved text), 79×82 at (620, 194) */
   innerCompassBadge: `${BASE}/images/inner-compass-badge.webp`,
-  /** 1010:70 — play icon, #FAF5F2, 70×80 */
-  playIcon: `${BASE}/icons/play-icon.svg`,
+  /** Innerwise mascot, praying, standalone cut-out (340×560) — hero video panel */
+  heroMascot: `${BASE}/images/hero-mascot.webp`,
 
-  // ── Discover cards (frame size = Figma frame, crop & mirror baked in) ──
-  /** 1010:84 — sun on cloud, 106×96 */
+  // ── Discover cards (Figma rev. 2 — illustration + soft ground shadow, transparent) ──
+  /** sun on cloud, 122×112 */
   discoverCalm: `${BASE}/images/discover-calm.webp`,
-  /** 1010:90 — moon & cloud (mirrored in Figma), 116×92 */
+  /** moon & cloud (mirrored in Figma), 135×117 */
   discoverSleep: `${BASE}/images/discover-sleep.webp`,
-  /** 1010:96 — star, 102×98 */
+  /** leaf (rotated 16.9° in Figma), 123×132 */
   discoverUnderstand: `${BASE}/images/discover-understand.webp`,
-  /** 1010:102 — bell speech bubble, 117×90 */
+  /** bell speech bubble, 136×115 */
   discoverHabits: `${BASE}/images/discover-habits.webp`,
-  /** 1010:108 — speech bubbles (mirrored in Figma), 98×83 */
+  /** blue chat bubbles, 112×112 */
   discoverConnect: `${BASE}/images/discover-connect.webp`,
-  /** 1010:114 — butterfly, 91×89 */
+  /** sprout ("Find Growth"), 116×112 */
   discoverChange: `${BASE}/images/discover-change.webp`,
 
   // ── Framework pillar icons (Figma vectors, #FAF5F2) ──────────────
@@ -98,6 +98,11 @@ export const ASSETS = {
   faqMinus: `${BASE}/icons/faq-minus.svg`,
   /** 1010:563 — plus (collapsed) */
   faqPlus: `${BASE}/icons/faq-plus.svg`,
+
+  // ── Meet Our Experts ─────────────────────────────────────────────
+  /** rev. 2 — video-call phone, AYUSH badge, call controls, expert card and ground shadow,
+   *  516×630 at (784, 6495) */
+  expertsVisual: `${BASE}/images/experts-visual.webp`,
 
   // ── Final CTA ────────────────────────────────────────────────────
   /** 1010:25 — white union with organic wavy top, native 1513×843 at (−48, 7747) */

@@ -25,3 +25,9 @@ dist-ssr
 
 # Design source files (full Figma export, raw extracted rasters, superseded assets) — never shipped
 design-source/
+
+# Visual regression snapshots (scripts/visual-diff.mjs)
+.visual/
+
+# Figma approval export (35 MB SVGs) — reference only, not shipped
+Innerwise\ Approval/

@@ -1,4 +1,8 @@
 import React from 'react';
+import ScrollProgress from '../components/primitives/ScrollProgress';
+import PlaceholderLinkNotice from '../components/primitives/PlaceholderLinkNotice';
+import { useScrollReveal } from '../lib/useScrollReveal';
+import { usePauseOffscreen } from '../lib/usePauseOffscreen';
 import AnnouncementBar from '../components/layout/AnnouncementBar';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -9,12 +13,19 @@ import ApproachSection from '../components/sections/ApproachSection/ApproachSect
 import QuickResetSection from '../components/sections/QuickResetSection/QuickResetSection';
 import AICompanionSection from '../components/sections/AICompanionSection/AICompanionSection';
 import ExplorePlaySection from '../components/sections/ExplorePlaySection/ExplorePlaySection';
+import ExpertsSection from '../components/sections/ExpertsSection/ExpertsSection';
 import FAQSection from '../components/sections/FAQSection/FAQSection';
 import FinalCTASection from '../components/sections/FinalCTASection/FinalCTASection';
 
 const HomePage: React.FC = () => {
+  useScrollReveal();
+  usePauseOffscreen();
   return (
     <div className="page-bg-pattern" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <ScrollProgress />
+      <PlaceholderLinkNotice />
+      <a href="#main" className="skip-link">Skip to content</a>
+
       {/* 1. Announcement Bar */}
       <AnnouncementBar />
 
@@ -22,7 +33,7 @@ const HomePage: React.FC = () => {
       <Navbar />
 
       {/* Main Page Sections */}
-      <main>
+      <main id="main" tabIndex={-1} style={{ outline: 'none' }}>
         {/* 3. Hero */}
         <Hero />
 
@@ -44,14 +55,17 @@ const HomePage: React.FC = () => {
         {/* 9. Explore & Play */}
         <ExplorePlaySection />
 
-        {/* 10. FAQ */}
+        {/* 10. Meet Our Experts (Figma rev. 2) */}
+        <ExpertsSection />
+
+        {/* 11. FAQ */}
         <FAQSection />
 
-        {/* 11. Final CTA */}
+        {/* 12. Final CTA */}
         <FinalCTASection />
       </main>
 
-      {/* 12. Footer */}
+      {/* 13. Footer */}
       <Footer />
     </div>
   );

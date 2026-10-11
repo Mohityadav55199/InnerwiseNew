@@ -1,0 +1,75 @@
+/* Quick Reset — four compact practice cards */
+
+.reset-section { position: relative; z-index: 1; padding: 72px 0; }
+.reset-inner {
+  max-width: calc(1040px + 2 * var(--page-gutter));
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reset-header { text-align: center; margin-bottom: 36px; }
+.reset-heading { font-size: clamp(24px, 2.3vw, 32px); margin-top: 14px; }
+.reset-lead { margin-top: 12px; font-size: 16px; line-height: 1.6; color: #4A4A4A; }
+
+.reset-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+/* ── Card ─────────────────────────────────────────────── */
+.reset-card {
+  padding: 12px 12px 16px;
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(46, 46, 46, 0.12);
+}
+.reset-photo { position: relative; overflow: hidden; border-radius: 10px; aspect-ratio: 4 / 3; }
+.reset-photo > img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.reset-card:hover .reset-photo > img { transform: scale(1.07); }
+
+/* duration pill on the photo */
+.reset-pill {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 8px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(46, 46, 46, 0.18);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+.reset-pill img { width: 14px; height: 14px; }
+
+.reset-title { margin: 12px 4px 0; font-size: 15px; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--color-ink); }
+
+.btn-quick-reset { min-width: 190px; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 899px) {
+  .reset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 559px) {
+  .reset-section { padding: 56px 0; }
+  .reset-grid { gap: 12px; margin-bottom: 28px; }       /* two across, even on phones */
+  .reset-card { padding: 8px 8px 12px; }
+  .reset-pill { left: 6px; top: 6px; padding: 3px 8px 3px 6px; font-size: 11px; }
+  .reset-title { margin: 10px 2px 0; font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reset-photo > img { transition: none; }
+  .reset-card:hover .reset-photo > img { transform: none; }
+}

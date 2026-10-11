@@ -1,0 +1,45 @@
+/* Final CTA — wavy white band (Figma 1010:25), copy left, mascot right */
+
+.cta-section { position: relative; z-index: 1; overflow: hidden; /* clips the wave's off-canvas tips */ }
+.cta-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.cta-wave {
+  position: absolute;
+  top: 0;
+  left: -3.3333vw;          /* −48px at 1440 */
+  width: 105.0694vw;        /* 1513px at 1440, native aspect (height auto) */
+  max-width: none;
+  height: auto;
+  display: block;
+}
+.cta-fill { position: absolute; left: 0; right: 0; top: 9.5139vw; bottom: 0; background: #FFFFFF; } /* white below the wave's body */
+
+.final-cta-inner {
+  position: relative;
+  z-index: 1;
+  margin: 0 var(--g-fixed);
+  padding: calc(9.5139vw + 36px) 0 64px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
+  gap: 56px;
+  align-items: center;
+}
+
+.cta-text { max-width: 500px; }
+.cta-title { font-size: clamp(28px, 2.8vw, 40px); margin-bottom: 18px; }
+.cta-body { font-size: 16px; line-height: 1.7; color: #4A4A4A; }
+.cta-pillar { font-weight: 600; }
+.cta-closing { margin: 12px 0 28px; font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--color-ink); }
+
+.cta-art { justify-self: center; width: 100%; transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), translate 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.cta-art img { width: 100%; height: auto; display: block; }
+.cta-art:hover { transform: scale(1.04) rotate(-2deg); }
+
+@media (max-width: 1024px) {
+  .final-cta-inner { margin: 0 var(--page-gutter); grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 28px; padding-bottom: 56px; text-align: center; }
+  .cta-text { max-width: 540px; }
+  .cta-art { max-width: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-art { transition: none; }
+  .cta-art:hover { transform: none; }
+}

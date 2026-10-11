@@ -1,189 +1,161 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Button from '../primitives/Button';
+import Logo from './nav/Logo';
+import MegaMenu from './nav/MegaMenu';
+import MobileMenu from './nav/MobileMenu';
+import { HamburgerIcon } from './nav/icons';
+import { NAV_ITEMS } from '../../config/navigation';
 import { NAV_LINKS } from '../../config/links';
-import { ASSETS } from '../../config/assets';
+import './Navbar.css';
 
-const NAV_ITEMS = [
-  { label: 'Your Space',    href: NAV_LINKS.yourSpace },
-  { label: 'Organizations', href: NAV_LINKS.organizations },
-  { label: 'Programs',      href: NAV_LINKS.programs },
-  { label: 'Wellness Hub',  href: NAV_LINKS.wellnessHub },
-  { label: 'About',         href: NAV_LINKS.about },
-  { label: 'Help',          href: NAV_LINKS.help },
-];
+const HOVER_OPEN_DELAY = 120;
+const HOVER_CLOSE_DELAY = 220;
+const DESKTOP_QUERY = '(min-width: 1200px)';
 
-const HamburgerIcon: React.FC<{ open: boolean }> = ({ open }) => (
-  <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
-    <rect
-      y="0" width="22" height="2" rx="1" fill="#2E2E2E"
-      style={{ transformOrigin: '11px 1px', transform: open ? 'rotate(45deg) translateY(7px)' : 'none', transition: 'transform 0.2s' }}
-    />
-    <rect
-      y="7" width="22" height="2" rx="1" fill="#2E2E2E"
-      style={{ opacity: open ? 0 : 1, transition: 'opacity 0.2s' }}
-    />
-    <rect
-      y="14" width="22" height="2" rx="1" fill="#2E2E2E"
-      style={{ transformOrigin: '11px 15px', transform: open ? 'rotate(-45deg) translateY(-7px)' : 'none', transition: 'transform 0.2s' }}
-    />
-  </svg>
-);
-
+/**
+ * Site header. Desktop (≥1200px): 7 items; four open a mega-menu by click or by hover
+ * (with intent delays). A click on a hover-opened menu pins it open; pinned menus close on
+ * Escape, an outside click, focus leaving the header, or a second click.
+ * Below 1200px: logo · Get Started · hamburger, opening the full-screen MobileMenu.
+ */
 const Navbar: React.FC = () => {
+  const [openId, setOpenId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const openedBy = useRef<'hover' | 'click'>('click');
+  const timer = useRef<number | undefined>(undefined);
+  const headerRef = useRef<HTMLElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
 
-  // Accessible Escape key handler to close mobile menu and return focus
+  const clearTimer = () => window.clearTimeout(timer.current);
+  const later = (fn: () => void, ms: number) => { clearTimer(); timer.current = window.setTimeout(fn, ms); };
+
+  const openIdRef = useRef(openId);
+  useEffect(() => { openIdRef.current = openId; }, [openId]);
+
+  const closeMenu = useCallback((restoreFocus = false) => {
+    clearTimer();
+    const current = openIdRef.current;
+    setOpenId(null);
+    if (restoreFocus && current) document.getElementById(`nav-trigger-${current}`)?.focus();
+  }, []);
+
+  // Escape + outside click while a mega-menu is open
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileOpen) {
-        setMobileOpen(false);
-        hamburgerRef.current?.focus();
-      }
+    if (!openId) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeMenu(true); };
+    const onPointer = (e: PointerEvent) => {
+      if (!headerRef.current?.contains(e.target as Node)) closeMenu();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [mobileOpen]);
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [openId, closeMenu]);
+
+  // Close whichever menu no longer applies when crossing the desktop breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia(DESKTOP_QUERY);
+    const onChange = () => (mq.matches ? setMobileOpen(false) : closeMenu());
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [closeMenu]);
+
+  useEffect(() => () => clearTimer(), []);
+
+  const onTriggerClick = (id: string) => {
+    clearTimer();
+    if (openId === id && openedBy.current === 'hover') { openedBy.current = 'click'; return; }
+    openedBy.current = 'click';
+    setOpenId(openId === id ? null : id);
+  };
+
+  const onItemPointerEnter = (e: React.PointerEvent, id: string | null) => {
+    if (e.pointerType !== 'mouse') return;
+    if (id === null) {
+      // plain link: hovering it dismisses a hover-opened menu
+      if (openId && openedBy.current === 'hover') later(() => setOpenId(null), HOVER_OPEN_DELAY);
+      return;
+    }
+    if (openId === id) { clearTimer(); return; }
+    if (openId && openedBy.current === 'click') return; // a pinned menu stays until dismissed
+    later(() => { openedBy.current = 'hover'; setOpenId(id); }, openId ? 0 : HOVER_OPEN_DELAY);
+  };
+
+  const onHeaderPointerLeave = (e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse') return;
+    if (openedBy.current === 'hover') later(() => setOpenId(null), HOVER_CLOSE_DELAY);
+    else clearTimer();
+  };
+
+  const onHeaderBlur = (e: React.FocusEvent) => {
+    if (openId && !headerRef.current?.contains(e.relatedTarget as Node | null)) closeMenu();
+  };
+
+  const closeMobile = () => {
+    setMobileOpen(false);
+    hamburgerRef.current?.focus();
+  };
 
   return (
-    <header style={{ backgroundColor: '#FFFFFF', position: 'relative', zIndex: 50 }}>
-      <nav
-        style={{
-          maxWidth: '1440px',
-          margin: '0 auto',
-          padding: '0 80px',
-          height: '59px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '20px',
-        }}
-        aria-label="Main navigation"
-        className="navbar-inner"
-      >
-        {/* Logo */}
-        <a
-          href={NAV_LINKS.home}
-          aria-label="Innerwise — home"
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}
-        >
-          <img
-            src={ASSETS.logoMark}
-            alt=""
-            width={60}
-            height={34}
-            aria-hidden="true"
-            style={{ width: '60px', height: '34px', display: 'block' }}
-          />
-          {/* Wordmark lockup: Figma glyphs at y 60 (InnerWise) and y 80 (tagline) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', position: 'relative', top: '-3.5px' }}>
-            <span style={{ fontWeight: 500, fontSize: '20px', lineHeight: 1.2, color: '#000000', fontFamily: 'Roboto, sans-serif' }}>
-              InnerWise
-            </span>
-            <span style={{ fontWeight: 400, fontSize: '10px', lineHeight: 1.17, color: '#000000', fontFamily: 'Roboto, sans-serif', marginTop: '-3px' }}>
-              Everything is within
-            </span>
-          </div>
-        </a>
+    <header ref={headerRef} className="site-header" onPointerLeave={onHeaderPointerLeave} onBlur={onHeaderBlur}>
+      <nav className="nav-bar" aria-label="Main">
+        <Logo />
 
-        {/* Desktop nav links */}
-        <ul
-          style={{ display: 'flex', alignItems: 'center', gap: '28px', listStyle: 'none', margin: 0, padding: 0 }}
-          className="nav-links-desktop"
-        >
-          {NAV_ITEMS.map(({ label, href }) => (
-            <li key={label}>
-              <a
-                href={href}
-                style={{ fontWeight: 500, fontSize: '18px', color: '#2E2E2E', fontFamily: 'Roboto, sans-serif', whiteSpace: 'nowrap' }}
-                className="nav-link"
-              >
-                {label}
-              </a>
+        <ul className="nav-items">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.id} onPointerEnter={(e) => onItemPointerEnter(e, item.menu ? item.id : null)}>
+              {item.menu ? (
+                <>
+                  <button
+                    id={`nav-trigger-${item.id}`}
+                    type="button"
+                    className="nav-item-link"
+                    aria-expanded={openId === item.id}
+                    aria-controls={`nav-menu-${item.id}`}
+                    onClick={() => onTriggerClick(item.id)}
+                  >
+                    {item.label}
+                  </button>
+                  <MegaMenu
+                    id={`nav-menu-${item.id}`}
+                    labelledBy={`nav-trigger-${item.id}`}
+                    menu={item.menu}
+                    open={openId === item.id}
+                    onNavigate={() => closeMenu()}
+                    onPointerEnter={(e) => { if (e.pointerType === 'mouse') clearTimer(); }}
+                  />
+                </>
+              ) : (
+                <a href={item.href} className="nav-item-link">{item.label}</a>
+              )}
             </li>
           ))}
         </ul>
 
-        {/* Desktop actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexShrink: 0 }} className="nav-actions-desktop">
-          <a
-            href={NAV_LINKS.signIn}
-            style={{ fontWeight: 600, fontSize: '16px', color: '#FE7209', fontFamily: 'Roboto, sans-serif' }}
-          >
-            Sign In
-          </a>
-          <Button variant="primary" size="nav" href={NAV_LINKS.getStarted}>
-            Get Started
-          </Button>
-        </div>
-
-        {/* Mobile hamburger button */}
-        <button
-          ref={hamburgerRef}
-          className="hamburger-btn"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-          style={{ background: 'none', border: 'none', padding: '4px', cursor: 'pointer', display: 'none' }}
-        >
-          <HamburgerIcon open={mobileOpen} />
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      <div
-        id="mobile-nav"
-        role="navigation"
-        aria-label="Mobile navigation"
-        style={{
-          position: 'absolute',
-          top: '59px',
-          left: 0,
-          right: 0,
-          backgroundColor: '#FFFFFF',
-          borderTop: '1px solid rgba(46,46,46,0.1)',
-          padding: '20px',
-          zIndex: 100,
-          boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-          display: mobileOpen ? 'block' : 'none',
-        }}
-      >
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-          {NAV_ITEMS.map(({ label, href }) => (
-            <li key={label} style={{ borderBottom: '1px solid rgba(46,46,46,0.08)' }}>
-              <a
-                href={href}
-                style={{ display: 'block', padding: '12px 0', fontWeight: 500, fontSize: '18px', color: '#2E2E2E', fontFamily: 'Roboto, sans-serif' }}
-                onClick={() => setMobileOpen(false)}
-              >
-                {label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <div style={{ marginTop: '16px', display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <a href={NAV_LINKS.signIn} style={{ fontWeight: 600, fontSize: '16px', color: '#FE7209', fontFamily: 'Roboto, sans-serif' }}>
-            Sign In
-          </a>
+        <div className="nav-actions">
+          <a href={NAV_LINKS.signIn} className="nav-signin">Sign In</a>
           <Button variant="primary" size="nav" href={NAV_LINKS.getStarted}>Get Started</Button>
         </div>
-      </div>
 
-      <style>{`
-        .nav-link { transition: color 0.15s ease; }
-        .nav-link:hover { color: #FE7209 !important; }
-        .nav-link:focus-visible { outline: 2px solid #FE7209; outline-offset: 2px; border-radius: 2px; }
-        @media (max-width: 1120px) {
-          .nav-links-desktop { display: none !important; }
-          .nav-actions-desktop { display: none !important; }
-          .hamburger-btn { display: flex !important; }
-          .navbar-inner { padding: 0 40px !important; }
-        }
-        @media (max-width: 768px) {
-          .navbar-inner { padding: 0 20px !important; }
-        }
-      `}</style>
+        <div className="nav-mobile-actions">
+          <Button variant="primary" size="nav" href={NAV_LINKS.getStarted}>Get Started</Button>
+          <button
+            ref={hamburgerRef}
+            type="button"
+            className="nav-hamburger"
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            aria-controls={mobileOpen ? 'mobile-nav' : undefined}
+            onClick={() => setMobileOpen(true)}
+          >
+            <HamburgerIcon />
+          </button>
+        </div>
+      </nav>
+
+      {mobileOpen && <MobileMenu onClose={closeMobile} />}
     </header>
   );
 };

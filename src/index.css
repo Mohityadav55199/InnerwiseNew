@@ -28,6 +28,16 @@
   --shadow-card:   0 4px 12px rgba(0, 0, 0, 0.25);
   --shadow-bubble: 0 4px 12.6px rgba(0, 0, 0, 0.65);
   --shadow-avatar: 0 0 14.3px 11px rgba(145, 214, 255, 0.41);
+
+  /* Outer page gutter (left/right) = ~10% of the screen width, 36px minimum, and never wider than a
+     1280px content column: 36px phones → 77 at 768 → 128 at 1280 → 144 at 1440 → 192 at 1920 */
+  --page-gutter: max(clamp(36px, 10vw, 192px), calc((100vw - 1280px) / 2));
+  /* The same gutter, eased where a layout needs a minimum width. Two-column sections need 1075px of
+     content, the 7-column footer 1076px,
+     and the 7-item navbar ~1120px — below that they use whatever margin is left. */
+  --g-fixed: min(var(--page-gutter), max(24px, calc((100vw - 1075px) / 2)));
+  --g-footer: min(var(--page-gutter), max(24px, calc((100vw - 1076px) / 2)));
+  --g-nav: min(var(--page-gutter), max(24px, calc((100vw - 1122px) / 2)));   /* 7 items + 16px min. gaps */
 }
 
 /* ─── Base resets ─── */
@@ -123,12 +133,25 @@ button:focus-visible {
   padding: 8px 24px;
 }
 
+/* Long labels (e.g. "Discover the Innerwise Approach") wrap instead of pushing past the gutter on small phones */
+@media (max-width: 479px) {
+  .btn:not(.btn-nav) {
+    white-space: normal;
+    height: auto;
+    min-height: 39px;
+    padding: 10px 24px;
+    line-height: 1.25;
+    text-align: center;
+  }
+}
+
 /* ─── Global Topographic Pattern Background (Isolated Stacking Context) ─── */
 .page-bg-pattern {
   position: relative;
   background-color: var(--color-page-bg);
   min-height: 100vh;
   isolation: isolate;
+  overflow-x: clip;   /* sections that slide in from the side (data-reveal="left|right") start just outside the viewport */
 }
 
 /* Figma tiles "image 63" (720×1079) in two columns from y 123 (rows 123 / 1202 / 2281)
@@ -156,11 +179,122 @@ button:focus-visible {
   height: 995px;
   background: #FFFFFF;
   border-radius: 50%;
-  top: -303px; /* page-relative y = -198 (hero starts at 105) */
+  top: -289px; /* page-relative y = -168 (hero starts at 121) */
   left: calc(50% - 917.5px);
   pointer-events: none;
   z-index: 0;
 }
+
+/* ─── Shared section typography ─── */
+/* Orange uppercase label above every section heading (Figma: Roboto SemiBold 16, +8% tracking) */
+.eyebrow {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.08em;
+  color: var(--color-orange);
+  text-transform: uppercase;
+  margin: 0 0 20px;
+}
+
+/* Section H2 — 50px at desktop, one consistent minimum on small screens */
+.section-title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: clamp(28px, 2.78vw, 40px);
+  line-height: 1.17;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* ─── Skip link (visible only when focused) ─── */
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: 100px;
+  background: var(--color-orange);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 16px;
+}
+.skip-link:focus { top: 8px; }
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  .btn:hover { transform: none; }
+}
+
+/* ─── Scroll reveal ─── */
+/* Elements marked data-reveal (see lib/useScrollReveal.ts) fade/slide in once, when first scrolled into view.
+   Uses the individual `translate`/`scale` properties so it never fights an element's own `transform`. */
+[data-reveal] {
+  opacity: 0;
+  transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), translate 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), scale 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, translate;
+}
+[data-reveal='up']    { translate: 0 30px; }
+[data-reveal='left']  { translate: -48px 0; }
+[data-reveal='right'] { translate: 48px 0; }
+[data-reveal='scale'] { translate: 0 22px; scale: 0.94; }
+[data-reveal].is-revealed { opacity: 1; translate: 0 0; scale: 1; will-change: auto; }
+/* single-column phones: sideways slides would look odd, so everything rises instead */
+@media (max-width: 767px) {
+  [data-reveal='left'], [data-reveal='right'] { translate: 0 26px; }
+}
+
+/* ─── Hover motion (cards lift, photos zoom, illustrations bob) ─── */
+.need-card, .pillar-card, .reset-card, .explore-tile, .faq-card, .rituals-banner {
+  transition: opacity 0.75s cubic-bezier(0.22, 0.61, 0.36, 1), translate 0.75s cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 0.28s ease, box-shadow 0.28s ease, border-color 0.2s ease;
+}
+.need-card:hover, .pillar-card:hover, .reset-card:hover, .rituals-banner:hover { transform: translateY(-5px); box-shadow: 0 14px 30px rgba(46, 46, 46, 0.2) !important; }
+.explore-tile:hover { transform: translateY(-5px); box-shadow: 0 14px 30px rgba(46, 46, 46, 0.14) !important; }
+.faq-card:hover { transform: translateY(-2px); }
+
+/* gentle idle float on the two big mascot illustrations */
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.approach-art img, .cta-art img { animation: float-y 7s ease-in-out infinite; }
+
+/* ─── Off-screen sections pause their looping animations (lib/usePauseOffscreen.ts) ─── */
+.is-offscreen *, .is-offscreen *::before, .is-offscreen *::after { animation-play-state: paused !important; }
+
+/* ─── Scroll progress bar ─── */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 150; pointer-events: none; }
+.scroll-progress-bar { height: 100%; background: linear-gradient(90deg, var(--color-orange), #FFCF0B); transform: scaleX(0); transform-origin: 0 50%; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; translate: none; scale: none; transition: none; }
+  .approach-art img, .cta-art img { animation: none; }
+  .need-card:hover, .pillar-card:hover, .reset-card:hover, .rituals-banner:hover,
+  .explore-tile:hover, .faq-card:hover { transform: none; }
+}
+
+/* ─── Placeholder-link notice (components/primitives/PlaceholderLinkNotice.tsx) ─── */
+.placeholder-notice { position: fixed; left: 50%; bottom: 24px; z-index: 160; translate: -50% 0; pointer-events: none; }
+.placeholder-notice-text {
+  display: block;
+  padding: 10px 18px;
+  border-radius: 100px;
+  background: var(--color-ink);
+  color: #FFFFFF;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(46, 46, 46, 0.25);
+  animation: notice-in 0.25s ease-out;
+}
+@keyframes notice-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .placeholder-notice-text { animation: none; } }
 
 /* ─── Utility ─── */
 .sr-only {

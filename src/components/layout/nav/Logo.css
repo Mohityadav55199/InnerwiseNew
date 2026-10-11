@@ -1,0 +1,9 @@
+/* InnerWise lockup (navbar and footer) */
+.nav-logo { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.nav-logo-mark { width: 60px; height: 34px; }
+.nav-logo-text { display: flex; flex-direction: column; position: relative; top: -3.5px; color: #2E2E2E; }
+.nav-logo-name { font-weight: 500; font-size: 19px; line-height: 1.2; }
+.nav-logo-tagline { font-weight: 400; font-size: 10px; line-height: 1.17; margin-top: 0; letter-spacing: 0.02em; word-spacing: 0.1em; }
+
+.nav-logo--light .nav-logo-text { color: #FFFFFF; }
+.nav-logo:focus-visible { outline: 2px solid var(--color-orange); outline-offset: 4px; border-radius: 4px; }

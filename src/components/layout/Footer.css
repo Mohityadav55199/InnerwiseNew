@@ -1,0 +1,89 @@
+/* Site footer — InnerWise colours/type.
+   Desktop (≥1200px): brand row on top, then all seven link groups on ONE row so every heading
+   shares a line. Below that the groups wrap into 4 → 3 → 2 columns (headings stay unbroken
+   until phones). */
+
+.site-footer {
+  background: var(--color-footer-bg);
+  color: #FFFFFF;
+}
+
+.footer-inner {
+  margin: 0 auto;
+  padding: 52px var(--g-footer) 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 36px;
+}
+
+/* ── Brand row ────────────────────────────────────────── */
+.footer-brand {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px 48px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.footer-pillars { margin-top: 12px; font-size: 13px; line-height: 20px; color: var(--color-cream); }
+.footer-tagline { margin-top: 4px; font-size: 14px; line-height: 22px; color: #FFFFFF; }
+.footer-care {
+  max-width: 340px;
+  font-size: 12px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ── Link groups ──────────────────────────────────────── */
+.footer-groups {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  column-gap: 20px;
+  row-gap: 36px;
+  align-content: start;
+}
+.footer-group-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;           /* headings never wrap on desktop/tablet */
+  color: var(--color-cream);
+  margin-bottom: 14px;
+}
+.footer-group-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-link {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.15s ease;
+}
+.footer-link:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 3px; }
+.footer-link:focus-visible { outline: 2px solid var(--color-orange); outline-offset: 2px; border-radius: 2px; }
+
+/* ── Responsive ───────────────────────────────────────── */
+/* 1024–1199: four across (two rows) */
+@media (max-width: 1199px) {
+  .footer-inner { padding: 48px var(--page-gutter) 44px; }
+  .footer-groups { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* 768–1023: three across */
+@media (max-width: 1023px) {
+  .footer-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; }
+}
+/* touch screens of any width: ≥ 34px rows without changing the column layout */
+@media (pointer: coarse) {
+  .footer-group-links { gap: 0; }
+  .footer-link { padding: 7px 0; }
+}
+/* phones: two columns, headings may wrap, ≥34px touch rows */
+@media (max-width: 767px) {
+  .footer-inner { padding: 40px var(--page-gutter) 40px; row-gap: 32px; }
+  .footer-brand { flex-direction: column; align-items: flex-start; padding-bottom: 24px; }
+  .footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; row-gap: 32px; }
+  .footer-group-title { white-space: normal; }
+  .footer-group-links { gap: 0; }
+  .footer-link { padding: 7px 0; } /* keeps rows ≥33px for touch */
+}

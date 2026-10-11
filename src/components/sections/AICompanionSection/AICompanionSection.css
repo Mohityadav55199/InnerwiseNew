@@ -1,0 +1,115 @@
+/* AI Companion — white band: phone composition left, copy right. 1cqw = 1% of the phone width. */
+
+.ai-section { position: relative; z-index: 1; background: #FFFFFF; }
+.ai-container {
+  margin: 0 var(--g-fixed);
+  padding: 64px 0 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: 72px;
+  align-items: center;
+}
+
+/* ── Phone composition ────────────────────────────────── */
+.ai-visual { min-width: 0; }
+.ai-stage { position: relative; width: 100%; aspect-ratio: 486 / 639; container-type: inline-size; }
+.ai-phone { position: absolute; inset: 0; width: 100%; height: auto; z-index: 1; display: block; }
+.ai-phone-shadow { position: absolute; left: 28.807cqw; top: 113.786cqw; width: 70.576cqw; height: auto; z-index: 0; }
+.ai-sparkle { position: absolute; z-index: 2; height: auto; }
+.ai-sparkle-star { left: 63.992cqw; top: -6.79cqw; width: 13.992cqw; }
+.ai-sparkle-thin { left: 72.222cqw; top: 8.23cqw; width: 9.053cqw; }
+
+.ai-bubbles { position: absolute; inset: 0; z-index: 3; }
+.ai-bubble { position: absolute; box-sizing: border-box; padding: 3.5cqw 4.1cqw 4.1cqw; animation: ai-pop 11s ease-in-out infinite; animation-delay: calc(var(--i) * 1.3s); }
+.ai-bubble-shape { position: absolute; left: -6.17cqw; top: -6.17cqw; max-width: none; pointer-events: none; }
+.ai-bubble-text {
+  position: relative;
+  margin: 0;
+  font-style: italic;
+  font-size: 2.47cqw;
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  color: #2E2E2E;
+  white-space: nowrap;
+}
+/* the conversation builds up, holds, then clears and starts again */
+@keyframes ai-pop {
+  0%        { opacity: 0; transform: translateY(2.5cqw) scale(0.92); }
+  7%, 84%   { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: translateY(-1cqw) scale(0.98); }
+}
+
+.ai-avatar {
+  position: absolute;
+  left: 6.996cqw;
+  top: 81.687cqw;
+  width: 41.152cqw;
+  height: 41.152cqw;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 2.058cqw #7A5495, 0 0 3cqw 2.2cqw rgba(145, 214, 255, 0.41);
+  overflow: hidden;
+  z-index: 4;
+  animation: ai-bob 6s ease-in-out infinite;
+}
+.ai-avatar img { width: 100%; height: 100%; display: block; }
+@keyframes ai-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.6cqw); } }
+
+.ai-disclaimer { margin: 28px auto 0; max-width: 300px; font-size: 13px; font-style: italic; line-height: 1.5; color: #686868; text-align: center; }
+
+/* ── Copy ─────────────────────────────────────────────── */
+.ai-content { max-width: 520px; }
+.ai-title { font-size: clamp(24px, 2.35vw, 34px); margin: 14px 0 18px; }
+.ai-lead { font-size: 16px; font-weight: 600; line-height: 1.5; color: #2E2E2E; margin-bottom: 20px; }
+
+.ai-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.ai-feature {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #4A4A4A;
+  transition: transform 0.3s ease;
+}
+.ai-feature:hover { transform: translateX(6px); }
+.ai-feature-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #E9F5FF;
+  transition: background-color 0.25s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ai-feature:hover .ai-feature-icon { background: #D3EBFF; transform: scale(1.1) rotate(-6deg); }
+.ai-feature-icon img { width: 22px; height: 22px; }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 1239px) {
+  .ai-container { margin: 0 var(--page-gutter); gap: 48px; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); }
+}
+@media (max-width: 899px) {
+  .ai-container { grid-template-columns: minmax(0, 1fr); justify-items: center; padding: 56px 0 48px; gap: 40px; }
+  .ai-visual { width: min(100%, 360px); }
+  .ai-content { max-width: 560px; }
+}
+/* phones: bubbles become a readable list under the phone instead of floating over it */
+@media (max-width: 560px) {
+  .ai-bubbles { position: static; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; margin-top: calc(100% * 639 / 486 + 18px); }
+  .ai-stage { aspect-ratio: auto; }
+  .ai-phone { position: absolute; }
+  .ai-bubble { position: static; width: auto !important; height: auto !important; max-width: 100%; padding: 12px 16px; background: #E9F5FF; border-radius: 6px 14px 14px 14px; box-shadow: 0 3px 10px rgba(46, 46, 46, 0.14); animation: none; }
+  .ai-bubble-shape { display: none; }
+  .ai-bubble-text { font-size: 13px; white-space: normal; }
+  .ai-bubble-text br { display: none; }
+  .ai-disclaimer { margin-top: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-bubble, .ai-avatar { animation: none; }
+  .ai-feature, .ai-feature-icon { transition: none; }
+  .ai-feature:hover, .ai-feature:hover .ai-feature-icon { transform: none; }
+}

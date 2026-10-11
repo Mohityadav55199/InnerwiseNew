@@ -1,0 +1,128 @@
+/* Discover — ice-blue panel with six need cards (3 × 2 on desktop, 2 × 3 on tablet, 1 × 6 on phones) */
+
+.discover-section { margin-top: 100px; padding: 0 var(--page-gutter); display: flex; justify-content: center; }
+
+.discover-panel {
+  width: 100%;
+  max-width: 1240px;
+  box-sizing: border-box;
+  padding: 52px 32px 48px;
+  background: #E9F5FF;
+  border-radius: 10px;
+}
+
+.discover-header { text-align: center; margin-bottom: 40px; }
+.discover-title { font-size: clamp(24px, 2.3vw, 32px); margin-top: 14px; }
+.discover-lead { max-width: 640px; margin: 14px auto 0; font-size: 16px; line-height: 1.6; color: #4A4A4A; }
+
+.discover-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+
+/* ── Card ─────────────────────────────────────────────── */
+.need-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px 20px 18px;
+  overflow: hidden;
+  /* a soft wash of the card's own colour from the illustration corner */
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--tint) 85%, #FFFFFF) 0%, rgba(255, 255, 255, 0) 55%),
+    #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(46, 46, 46, 0.1);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.need-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* thin accent line along the bottom that grows on hover */
+.need-card::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0.18);
+  transform-origin: 0 50%;
+  opacity: 0.55;
+  transition: transform 0.45s ease, opacity 0.3s ease;
+}
+.need-card:hover::after { transform: scaleX(1); opacity: 0.85; }
+
+/* illustration on a tinted disc, framed by a dashed ring that turns on hover */
+.need-card-img {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+}
+.need-card-img::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.need-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: transform 1.2s ease;
+}
+.need-card:hover .need-card-img::before { transform: scale(1.1); }
+.need-card:hover .need-card-img::after { transform: rotate(120deg); }
+.need-card-img img { position: relative; width: 78px; height: 78px; object-fit: contain; transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.need-card:hover .need-card-img img { transform: translateY(-6px) rotate(-6deg) scale(1.06); }
+
+.need-card-text { min-width: 0; }
+.need-card-title { font-size: 17px; font-weight: 600; line-height: 1.3; color: var(--color-ink); }
+.need-card-desc { margin-top: 4px; font-size: 14px; line-height: 1.5; color: #4A4A4A; }
+
+/* Explore pill: tinted, fills with the accent colour on hover */
+.need-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--tint) 70%, #FFFFFF);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: color-mix(in srgb, var(--accent) 62%, #1E1E1E);   /* deepened so every tint passes 4.5:1 */
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.need-card-arrow { display: inline-block; transition: transform 0.25s ease; }
+.need-card:hover .need-card-link { background: color-mix(in srgb, var(--accent) 64%, #1E1E1E); color: #FFFFFF; }
+.need-card:hover .need-card-arrow { transform: translateX(4px); }
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 1239px) {
+  .discover-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* two columns need ≥900px (cards ≥ 370px); below that a single, roomier column */
+@media (max-width: 899px) {
+  .discover-grid { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 767px) {
+  .discover-section { margin-top: 72px; }
+  .discover-panel { padding: 40px 20px 32px; }
+  .discover-header { margin-bottom: 28px; }
+  .discover-lead-break { display: none; }
+  .need-card { padding: 16px 18px 16px 14px; gap: 14px; }
+  .need-card-img { width: 80px; height: 80px; }
+  .need-card-img img { width: 66px; height: 66px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .need-card::after, .need-card-img::before, .need-card-img::after, .need-card-img img, .need-card-arrow, .need-card-link { transition: none; }
+  .need-card:hover .need-card-img::before, .need-card:hover .need-card-img::after, .need-card:hover .need-card-img img, .need-card:hover .need-card-arrow { transform: none; }
+}
